@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        [/- include('__externals__.ejs'); /]
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible"
+              content="IE=edge">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+        <title>[/= siteName/] | [/= tagline /]</title>
+    </head>
+
+    <body class='bg-gray-700'>
+        [/- include('__header__.ejs') /]
+
+        <div class='relative'>
+
+            <img src='/img/logo.jpg'
+                 class='object-cover w-full h-96 '
+                 width='1000'
+                 height='500'
+                 alt='bg' />
+
+
+            <!-- Conditional Template Inclusion  -->
+            [/ if ( templateType === 'dashboard'){ /]
+            <p class='text-5xl font-normal text-white absolute top-20 left-10'> <i
+                   class='bi-speedometer2'></i>
+                Dashboard
+            </p>
+            [/ } /]
+
+
+            [/ if ( templateType === 'transactions'){ /]
+            <p class='text-5xl font-normal text-white absolute top-20 left-10'> <i
+                   class='bi-journal-album'></i>
+                Transactions
+            </p>
+            [/ } /]
+
+
+            [/ if (templateType === 'deposits'){ /]
+            <p class='text-5xl font-normal text-white absolute top-20 left-10'> <i
+                   class='bi-cash-stack'></i>
+                Deposits
+            </p>
+            [/ } /]
+
+
+            [/ if (templateType === 'notifications'){ /]
+            <p class='text-5xl font-normal text-white absolute top-20 left-10'> <i
+                   class='bi-bell'></i>
+                Notifications
+            </p>
+            [/ } /]
+
+            [/ if (templateType === 'withdrawals'){ /]
+            <p class='text-5xl font-normal text-white absolute top-20 left-10'> <i
+                   class='bi-download'></i>
+                Withdrawals
+            </p>
+            [/ } /]
+
+            [/ if (templateType === 'settings'){ /]
+            <p class='text-5xl font-normal text-white absolute top-20 left-10'> <i
+                   class='bi-sliders'></i>
+                Settings
+            </p>
+            [/ } /]
+
+
+
+
+
+
+        </div>
+
+        <main class=' mx-32 my-32'>
+
+            <div class='flex flex-row items-center justify-around space-x-8 '>
+
+                <div class='w-1/4 bg-gray-100 self-start h-screen'>
+
+                    <div>
+
+                        <div>
+                            <img src="/07.png"
+                                 height="200"
+                                 width="150"
+                                 alt='Avatar'
+                                 class="rounded-full block mx-auto my-4 border-4 border-blue-500" />
+
+                            <h2 class='font-bold text-center px-1 text-xl md:text-2xl capitalize'>
+                                Thomas Jasper </h2>
+                            <p class=' text-center px-1 text-base md:text-lg '>
+                                thomas@gmail.com </p>
+                        </div>
+
+                        <div class='flex flex-col  justify-center items-center rounded mt-8'>
+
+                            <a href="[/=appUrl/]/?component_ref=dashboard"
+                               class='py-4 hover:bg-gray-300  capitalize block w-full text-left text-xl px-6
+
+                               [/ if (templateType==="dashboard") { /]
+                               bg-blue-500 text-white
+                               [/}/]
+
+                               '>
+                                <i class='
+                               bi-speedometer2
+                               text-xl
+                               px-2'></i>
+                                Dashboard
+                            </a>
+                            <a href="[/=appUrl/]/?component_ref=deposits"
+                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
+
+                                [/ if (templateType==="deposits") { /]
+                               bg-blue-500 text-white
+                               [/}/]
+
+                               '>
+                                <i class='bi-cash-stack text-xl px-2'></i>
+                                Deposit money
+                            </a><a href="[/=appUrl/]/?component_ref=withdrawals"
+                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
+
+                                [/ if (templateType==="withdrawals") { /]
+                               bg-blue-500 text-white
+                               [/}/]
+                               '>
+                                <i class='bi-download text-xl px-2'></i>
+                                Withdraw money
+                            </a><a href="[/=appUrl/]/?component_ref=dashboard"
+                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
+
+                                [/ if (templateType==="invest") { /]
+                               bg-blue-500 text-white
+                               [/}/]
+                               '>
+                                <i class='bi-box-arrow-up-right text-xl px-2'></i>
+                                Total Investment
+                            </a><a href="[/=appUrl/]/?component_ref=transactions"
+                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
+                                [/ if (templateType==="transactions") { /]
+                               bg-blue-500 text-white
+                               [/}/]
+
+                               '>
+                                <i class='bi-journal-album text-xl px-2'></i>
+                                Transactions
+                            </a><a href="[/=appUrl/]/?component_ref=notifications"
+                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
+                                [/ if (templateType==="notifications") { /]
+                               bg-blue-500 text-white
+                               [/}/]
+
+                               '>
+                                <i class='bi-bell text-xl px-2'></i>
+                                Notifications
+                            </a>
+                            </a><a href="[/=appUrl/]/?component_ref=settings"
+                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
+
+                                [/ if (templateType==="settings") { /]
+                               bg-blue-500 text-white
+                               [/}/]
+                               '>
+                                <i class='bi-sliders text-xl px-2'></i>
+                                Settings
+                            </a>
+                            </a><a href="/banking/authentications/log-out/"
+                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6  '>
+                                <i class='bi-box-arrow-left text-xl px-2'></i>
+                                Log out
+                            </a>
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class='flex-1 self-start '>
+
+
+                    <div class='flex flex-row justify-between items-center py-6 px-12 bg-gray-100'>
+
+                        <div class='w-4/12 relative'> <input type='text'
+                                   name='search'
+                                   class='py-3 pl-8 w-full pr-8 rounded-lg outline-none ring-1 ring-gray-300'
+                                   placeholder='Search  transactions' />
+
+
+                            <i
+                               class='bi-search absolute text-lg cursor-pointer inline-block px-2 py-1 top-2 right-2 bg-gray-700 text-white rounded-full'></i>
+
+                        </div>
+                        <div>
+
+                            <div class='relative inline-block'>
+                                <i
+                                   class='bi-bell text-xl inline-block px-3 py-2 bg-gray-700 text-white rounded-full'></i>
+                                <span
+                                      class='bg-red-500 text-sm absolute bottom-9 right-1 text-white rounded-full px-2'>
+                                    7 </span>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            <i
+                               class='bi-person text-xl inline-block px-3 py-2 bg-gray-700 text-white rounded-full'></i>
+
+                        </div>
+
+                    </div>
+
+                    [/ if (templateType !== 'notifications' && templateType !== 'settings' &&
+                    templateType !== 'transactions'){ /]
+
+
+
+                    <div class=' '>
+                        <div class='flex flex-row justify-around space-x-8 items-center  mt-6'>
+
+                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center  '>
+                                <div
+                                     class='flex flex-row justify-between px-12 self-center items-center'>
+                                    <p class='text-center text-2xl inline-block  text-gray-700'>
+                                        Deposit
+                                        <br>
+                                        <span class='py-2 text-base'> $500.00 </span>
+                                    </p>
+                                    <i
+                                       class='bi-cash      text-4xl inline-block px-5  py-4 bg-gray-700 text-white rounded-full'></i>
+                                </div>
+                            </div>
+
+                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
+                                <div
+                                     class='flex flex-row justify-between px-12 self-center items-center'>
+                                    <p class='text-center text-2xl inline-block  text-gray-700'>
+                                        Withdraw
+                                        <br>
+                                        <span class='py-2 text-base'> $500.00 </span>
+                                    </p>
+                                    <i
+                                       class='bi-download      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                                </div>
+                            </div>
+
+                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
+                                <div
+                                     class='flex flex-row justify-between px-12 self-center items-center'>
+                                    <p class='text-center text-2xl inline-block  text-gray-700'>
+                                        Invest
+                                        <br>
+                                        <span class='py-2 text-base'> $500.00 </span>
+                                    </p>
+                                    <i
+                                       class='bi-graph-up      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class='flex flex-row justify-evenly space-x-6 items-center  mt-6'>
+
+                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center  '>
+                                <div
+                                     class='flex flex-row justify-between px-12 self-center items-center'>
+                                    <p class='text-center text-2xl inline-block  text-gray-700'>
+                                        Wallet
+                                        <br>
+                                        <span class='py-2 text-base'> $500.00 </span>
+                                    </p>
+                                    <i
+                                       class='bi-wallet2      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                                </div>
+                            </div>
+
+                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
+                                <div
+                                     class='flex flex-row justify-between px-12 self-center items-center'>
+                                    <p class='text-center text-2xl inline-block  text-gray-700'>
+                                        Referral
+                                        <br>
+                                        <span class='py-2 text-base'> $500.00 </span>
+                                    </p>
+                                    <i
+                                       class='bi-link      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                                </div>
+                            </div>
+
+                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
+                                <div
+                                     class='flex flex-row justify-between px-12 self-center items-center'>
+                                    <p class='text-center text-2xl inline-block  text-gray-700'>
+                                        Profit
+                                        <br>
+                                        <span class='py-2 text-base'> $500.00 </span>
+                                    </p>
+                                    <i
+                                       class='bi-currency-exchange    text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    [/}/]
+
+
+                    <!-- Conditional Template Inclusion  -->
+                    [/ if ( templateType === 'dashboard'){ /]
+                    [/- include('__tx_logs__.ejs'); /]
+                    [/ } /]
+
+                    [/ if ( templateType === 'transactions'){ /]
+                    [/- include('__transactions__.ejs'); /]
+                    [/ } /]
+
+
+                    [/ if (templateType === 'deposits'){ /]
+                    [/- include('__deposit_logs__.ejs'); /]
+                    [/ } /]
+
+
+                    [/ if (templateType === 'notifications'){ /]
+                    [/- include('__notifications__.ejs'); /]
+                    [/ } /]
+
+                    [/ if (templateType === 'withdrawals'){ /]
+                    [/- include('__withdrawal_logs__.ejs'); /]
+                    [/ } /]
+
+                    [/ if (templateType === 'settings'){ /]
+                    [/- include('__settings__.ejs'); /]
+                    [/ } /]
+
+                </div>
+
+            </div>
+
+
+
+
+        </main>
+
+        [/- include('__footer__.ejs');/]
+
+
+
+    </body>
+
+</html>

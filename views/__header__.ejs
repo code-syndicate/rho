@@ -1,0 +1,64 @@
+<div class=' top-0 left-0 right-0 shadow-sm'>
+
+    <div class='flex flex-row items-center justify-between p-4 '>
+        <div
+             class='flex flex-row flex-nowrap justify-center items-center space-x-2 cursor-default select-none'>
+            <img src='/img/logo.jpg'
+                 alt='logo'
+                 height="500"
+                 class='rounded-full'
+                 width="50" />
+            <h1 class='font-bold uppercase text-white text-lg md:text-2xl font-black'>
+
+                [/= siteName /]
+            </h1>
+
+        </div>
+
+        <div class=' md:w-2/4'>
+            <ul class="flex flex-row items-center justify-around">
+                <a href="[/=appUrl/]/?component_ref=dashboard"
+                   class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
+                    Home </a>
+                <a href="[/=appUrl/]/?component_ref=dashboard"
+                   class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
+                    Dashboard </a><a href="[/=appUrl/]/?component_ref=dashboard"
+                   class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
+                    Investment </a><a href=""
+                   class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
+                    <a href=""
+                       class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
+                        Blog </a>
+
+                    <a href=""
+                       class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
+                        Contacts </a>
+
+
+                    [/ if (auth.user) { /]
+
+                    <a href='/banking/authentications/log-out/'
+                       role='button'
+                       class='text-center  uppercase bg-blue-500   hover:bg-blue-400  font-semibold text-white py-2 px-6 rounded transition-colors font-sans   text-base md:text-lg'>
+                        Log out </a>
+
+
+
+
+                    [/ } else { /]
+                    <a href='/banking/authentications/sign-up/'
+                       role='button'
+                       class='text-center  uppercase bg-blue-500   hover:bg-blue-400  font-semibold text-white py-2 px-6 rounded transition-colors font-sans   text-base md:text-lg'>
+                        Sign up </a>
+
+
+                    [/ } /]
+
+
+
+            </ul>
+        </div>
+
+
+    </div>
+</div>
