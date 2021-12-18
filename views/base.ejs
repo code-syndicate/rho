@@ -12,6 +12,29 @@
         <title>[/= siteName/] | [/= tagline /]</title>
     </head>
 
+    <script>
+        $(document).ready(() => {
+
+            $('#openMenu').click(() => {
+
+                $('#menu').slideDown('fast');
+                $('#menu').css({ 'display': 'flex' })
+            })
+
+            $('#closeMenu').click(() => {
+
+                $('#menu').css({ 'display': 'flex' })
+                $('#menu').slideUp('fast');
+            })
+
+
+
+
+
+
+        })
+    </script>
+
     <body class='bg-gray-700'>
         [/- include('__header__.ejs') /]
 

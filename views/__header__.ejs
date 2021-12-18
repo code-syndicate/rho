@@ -16,11 +16,11 @@
         </div>
 
         <div class='  md:w-2/4 '>
-            <i class='bi-justify-left md:hidden text-4xl text-white '></i>
-            <ul
-                class=" fixed md:static top-0 left-0 right-0 bottom-0 bg-gray-800 md:bg-gray-700  z-20 flex flex-col md:flex-row items-center justify-around">
-                <i onclick="this.parentElement.parentElement.style.display = 'none'"
-                   class='bi-x text-xl absolute top-0 right-0 p-2 inline-block bg-gray-100 hover:bg-gray-300 text-black  cursor-pointer rounded-tr '></i>
+            <i id='openMenu'
+               class='bi-justify-left md:hidden text-4xl text-white'></i>
+            <ul id='menu'
+                class=" hidden fixed  md:relative top-0 left-0 right-0 bottom-0 bg-gray-800 md:bg-gray-700  z-20 flex flex-col md:flex-row items-center justify-around">
+
                 <a href="/"
                    class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
                     Home </a>
@@ -34,7 +34,7 @@
                        class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
                         Withdrawal </a>
 
-                    <a href=""
+                    <a href="/#abt"
                        class='text-center  uppercase   hover:text-blue-400 font-semibold text-white transition-colors font-sans   text-base md:text-lg'>
                         Contact us </a>
 
@@ -56,8 +56,10 @@
                         Sign up </a>
 
 
-                    [/ } /]
 
+                        [/ } /]
+
+                        <div id='closeMenu'><i class='bi-x-circle text-4xl text-white'></i></div>
 
 
             </ul>
