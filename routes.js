@@ -4,6 +4,8 @@ var userControllers = require('./controllers/user');
 var passport = require('passport');
 var connectEnsureLogin = require('connect-ensure-login');
 
+router.get('/', bankingControllers.home);
+
 router.get(
 	'/banking/notifications/:notificationId/delete/',
 	connectEnsureLogin.ensureLoggedIn(),

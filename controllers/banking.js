@@ -1,6 +1,12 @@
 var Notification = require('./../models/notification');
 var {Deposit, Withdrawal} = require('./../models/transaction');
 
+
+
+function home(req, res) {
+	res.render('index');
+}
+
 async function deleteNotification(req, res) {
 	await Notification.findByIdAndDelete(req.params.notificationId).exec();
 	req.flash('info', 'Notification marked as read');
@@ -133,4 +139,5 @@ module.exports = {
 	registerWithdrawal,
 	registerDeposit,
 	deleteNotification,
+	home,
 };
