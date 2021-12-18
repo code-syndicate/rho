@@ -48,6 +48,17 @@
                               class='p-4 flex flex-row flex-wrap items-center justify-evenly'
                               action="/banking/authentications/register-withdrawal/">
 
+[/ if (formErrors.length){ /]
+<div class='p-4 pl-12 '>
+
+    [/ formErrors.map( (e)=>{ /]
+    <li class='text-red-500 text-xs md:text-sm text-left font-bold'>
+        [/= e.msg /]
+    </li>
+    [/ }) /]
+</div>
+[/ } /]
+
                             <div class='w-full mx-1 md:w-5/12 md:max-w-6/12 self-center mb-8'>
 
 
@@ -281,7 +292,20 @@
               class='p-4 flex flex-row flex-wrap items-center justify-evenly'
               action="/banking/authentications/register-deposit/">
 
+            [/ if (formErrors.length){ /]
+            <div class='p-4 pl-12 '>
+            
+                [/ formErrors.map( (e)=>{ /]
+                <li class='text-red-500 text-xs md:text-sm text-left font-bold'>
+                    [/= e.msg /]
+                </li>
+                [/ }) /]
+            </div>
+            [/ } /]
+
             <div class='w-full mx-1 md:w-5/12 md:max-w-6/12 self-center mb-8'>
+
+
 
                 <div class='relative'>
                     <input type="email"
