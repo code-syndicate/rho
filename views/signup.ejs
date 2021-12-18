@@ -19,10 +19,16 @@
 
         [/- include('__header__.ejs'); /]
 
+        <div class='relative'>
 
+            <img src='/img/bg2.jpg'
+                 alt='bg'
+                 height='200'
+                 class='object-cover '>
 
-        <div class='max-w-lg mx-auto border border-black mt-16 bg-gray-100 rounded mb-16'>
-            <form class=' pb-8 rounded'
+<div
+     class='max-w-2xl absolute top-0 left-0 right-0 mx-auto border border-black mt-16 bg-gray-100 rounded mb-16'>
+    <form class=' pb-8 rounded '
                   method="post"
                   action="/banking/authentications/sign-up/">
 
@@ -47,9 +53,9 @@
 
                 </div>
 
-                <div class='space-y-8'>
+                <div class='space-y-8 flex flex-col md:flex-row flex-wrap justify-evenly items-center'>
 
-                    <div class='w-full md:w-4/5 md:mx-auto'>
+                    <div class='w-full md:w-5/12 md:max-w-6/12 mt-8 md:mx-auto'>
                         <label for='firstname'
                                class='text-base md:text-xl text-left text-black py-4 inline-block'>
                             Firstname
@@ -68,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class='w-full md:w-4/5 md:mx-auto'>
+                    <div class='w-full md:w-5/12 md:max-w-6/12 mt-8 md:mx-auto'>
                         <label for='lastname'
                                class='text-base md:text-xl text-left text-black py-4 inline-block'>
                             Lastname
@@ -87,7 +93,7 @@
 
 
 
-                    <div class='w-full md:w-4/5 md:mx-auto'>
+                    <div class='w-full md:w-5/12 md:max-w-6/12 mt-8 md:mx-auto'>
                         <label for='email'
                                class='text-base md:text-xl text-left text-black py-4 inline-block'>
                             Email Address
@@ -106,7 +112,7 @@
                     </div>
 
 
-                    <div class='w-full md:w-4/5 md:mx-auto'>
+                    <div class='w-full md:w-5/12 md:max-w-6/12 mt-8 md:mx-auto'>
                         <label for='zipcode'
                                class='text-base md:text-xl text-left text-black py-4 inline-block'>
                             Postal code
@@ -123,7 +129,7 @@
                         </div>
                     </div>
 
-                    <div class='w-full md:w-4/5 md:mx-auto'>
+                    <div class='w-full md:w-5/12 md:max-w-6/12 mt-8 md:mx-auto'>
                         <label for='avatar'
                                class='text-base md:text-xl text-left text-black py-4 inline-block'>
                             Avatar
@@ -138,7 +144,7 @@
                         </div>
                     </div>
 
-                    <div class='w-full md:w-4/5 md:mx-auto'>
+                    <div class='w-full md:w-5/12 md:max-w-6/12 mt-8 md:mx-auto'>
                         <label class='text-base md:text-xl text-left text-black py-4 inline-block'
                                for='password1'> Password </label>
 
@@ -154,7 +160,7 @@
                     </div>
 
 
-                    <div class='w-full md:w-4/5 md:mx-auto'>
+                    <div class='w-full md:w-5/12 md:max-w-6/12 mt-8 md:mx-auto'>
                         <label class='text-base md:text-xl text-left text-black py-4 inline-block'
                                for='password2'> Confirm Password </label>
 
@@ -169,18 +175,20 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class='w-full md:w-5/12 md:max-w-6/12'>
 
                         <input type='submit'
                                value='Sign up'
-                               class='w-full bg-blue-500 text-white hover:bg-blue-600 md:w-4/5 md:mx-auto block rounded mt-16 text-center p-4 outline-none cursor-pointer text-lg ' />
+                               class='w-full  bg-blue-500 text-white hover:bg-blue-600 md:w-4/5 md:mx-auto block rounded mt-16 text-center p-4 outline-none cursor-pointer text-lg ' />
 
                     </div>
                 </div>
             </form>
         </div>
 
-        [/- include('__footer__.ejs'); /]
+    </div>
+    [/- include('__footer__.ejs'); /]
+
 
 
     </body>

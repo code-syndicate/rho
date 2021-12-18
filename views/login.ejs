@@ -18,10 +18,15 @@
 
         [/- include('__header__.ejs'); /]
 
+        <div class='relative'>
+        
+            <img src='/img/bg2.jpg'
+                 alt='bg'
+                 class='object-cover'>
 
 
         <div
-             class='max-w-lg mx-auto border border-black mt-16 bg-gray-100 rounded mb-48 pt-8 pb-16'>
+             class='max-w-lg absolute top-0 left-0 right-0  mx-auto border border-black mt-16 bg-gray-100 rounded mb-48 pt-8 pb-16'>
             <form class=' pb-8 rounded'
                   method="post"
                   action="/banking/authentications/log-in/">
@@ -96,6 +101,8 @@
                     </div>
                 </div>
             </form>
+        </div>
+
         </div>
 
         [/- include('__footer__.ejs'); /]
