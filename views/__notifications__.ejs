@@ -22,10 +22,10 @@
 
 
             [/ notifications.map((t)=>{ /]
-            
+
             <tr class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
                 <td class="py-4 PX-2"> [/=t.description/] </td>
-                <td class='px-2 '> [/=t.date/] </td>
+                <td class='px-2 '> [/=t.date.toLocaleString()/] </td>
                 <td> <a href='/banking/notifications/[/=t._id/]/delete/'><i title='Mark as read'
                            class='bi-check-lg text-white bg-green-500 hover:bg-green-600  inline-block py-1 px-2'></i></a>
                 </td>

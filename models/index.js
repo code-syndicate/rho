@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-module.exports = function () {
+module.exports = async function () {
 	mongoose
 		.connect(process.env.DATABASE_URL, {
 			useNewUrlParser: true,
@@ -13,3 +13,5 @@ module.exports = function () {
 			console.log('\n --> Database connection error: ', err.message);
 		});
 };
+
+
