@@ -27,6 +27,11 @@
                 $('#menu').slideUp('fast');
             })
 
+            $('#openBtc').click(() => {
+
+                $('#btc').fadeIn('fast');
+            })
+
 
 
 
@@ -39,14 +44,15 @@
         [/- include('__header__.ejs') /]
 
         <!-- Details -->
-        <div class='fixed hidden top-4 left-0 right-0 mx-auto   bg-white md:max-w-4xl z-30 pb-6'>
+        <div id='btc'
+             class='fixed hidden top-4 left-0 right-0 mx-auto   bg-white md:max-w-4xl z-30 pb-6'>
             <div class='relative p-4'>
 
                 <i onclick="this.parentElement.parentElement.style.display = 'none'"
                    class='bi-x text-xl absolute top-0 right-0 p-2 inline-block bg-gray-100 hover:bg-gray-300 text-black  cursor-pointer rounded-tr '></i>
 
 
-                <img src='/07.png'
+                <img src='/img/qr.png'
                      width='400'
                      height='400'
                      class='object-cover mx-auto block'
@@ -56,8 +62,8 @@
                 <p class='ml-4 text-center text-sm text-black  '>
                     Copy the address below or scan the QR </p>
                 <br />
-                <p class='ml-4 text-center text-lg text-black font-bold '>
-                    FUKJFUu68iukvxIYKFJXSRYUDTFYKGJVHCJXHf [/= /] </p>
+                <p class=' text-center text-sm text-black font-bold '>
+                    [/=BTC /] </p>
 
             </div>
 

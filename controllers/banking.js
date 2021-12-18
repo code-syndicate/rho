@@ -127,6 +127,7 @@ async function index(req, res) {
 	res.locals.withdrawals = withdrawals;
 	res.locals.notifications = notifications;
 	res.locals.user = req.user;
+	res.locals.BTC = 'bc1qhp4ghpz5z6nd60ge7mump80terk022y5gse8f9';
 
 	res.render('base', {
 		templateType: componentRef,
