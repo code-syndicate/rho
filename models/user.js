@@ -1,9 +1,14 @@
+var passportLocalMongoose = require('passport-local-mongoose');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var {nanoid} = require('nanoid');
 
 function genVerificationCode() {
 	return nanoid(8);
+}
+
+function genReferralCode() {
+	return nanoid(5);
 }
 
 function genAcctNum() {
@@ -25,8 +30,13 @@ const userSchema = mongoose.Schema({
 	email: {type: String, unique: true},
 	avatar: String,
 	password: String,
+	withdrawals: {type: Number, default: 0, min: 0},
+	bonus: {type: Number, default: 0, min: 0},
+	profits: {type: Number, default: 0, min: 0},
+	wallet: {type: Number, default: 0, min: 0},
 	hasVerifiedEmailAddress: {type: Boolean, default: false},
 	verificationCode: {type: String, default: genVerificationCode},
+	referralCode: {type: String, default: genReferralCode},
 	account: {
 		accountNumber: {type: String, default: genAcctNum, unique: true},
 		accountType: {type: String, default: 'Savings'},
@@ -58,4 +68,8 @@ userSchema.methods.refreshVerificationCode = function () {
 	this.save();
 };
 
-module.exports = mongoose.model('User', userSchema);
+userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

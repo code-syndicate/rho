@@ -15,6 +15,33 @@
     <body class='bg-gray-700'>
         [/- include('__header__.ejs') /]
 
+<!-- InfoBoard  -->
+
+[/ let textToShow = req.flash('info') /]
+
+
+[/ if (textToShow.length) { /]
+<div class='fixed top-4 left-0 right-0 mx-auto  rounded bg-white md:max-w-2xl z-30 pb-6'>
+    <div class='relative p-4'>
+
+
+        <i
+           class='bi-info-circle text-xl absolute top-0 left-0 p-2 inline-block  rounded-l   rounded-t'></i>
+
+        <i onclick="this.parentElement.parentElement.style.display = 'none'"
+           class='bi-x text-xl absolute top-0 right-0 p-2 inline-block bg-gray-100 hover:bg-gray-300 text-black  cursor-pointer rounded-tr '></i>
+
+        <br /><br />
+        <p class='ml-4 text-left text-xl text-blue-500 '> [/= textToShow/] </p>
+
+    </div>
+
+
+</div>
+<!-- Info  -->
+
+[/ } /]
+
         <div class='relative'>
 
             <img src='/img/logo.jpg'
@@ -81,24 +108,24 @@
 
             <div class='flex flex-row items-center justify-around space-x-8 '>
 
-                <div class='w-1/4 bg-gray-100 self-start h-screen'>
+                <div class='w-1/4 bg-gray-100 self-start min-h-screen pb-16'>
 
                     <div>
 
                         <div>
-                            <img src="/07.png"
+                            <img src="[/= user.avatar || '/07.png' /]"
                                  height="200"
                                  width="150"
                                  alt='Avatar'
                                  class="rounded-full block mx-auto my-4 border-4 border-blue-500" />
 
-                            <h2 class='font-bold text-center px-1 text-xl md:text-2xl capitalize'>
-                                Thomas Jasper </h2>
+                            <h2 class='font-semibold text-center text-gray-700 px-1 text-xl md:text-2xl capitalize'>
+                                [/= auth.user ? auth.user.firstname + ' ' + auth.user.lastname : "Anonymous Anonymous" /] </h2>
                             <p class=' text-center px-1 text-base md:text-lg '>
-                                thomas@gmail.com </p>
+                                [/= auth.user ? auth.user.email : "Anonymous " /] </p>
                         </div>
 
-                        <div class='flex flex-col  justify-center items-center rounded mt-8'>
+                        <div class='flex flex-col  justify-center items-center rounded mt-8 '>
 
                             <a href="[/=appUrl/]/?component_ref=dashboard"
                                class='py-4 hover:bg-gray-300  capitalize block w-full text-left text-xl px-6
@@ -114,6 +141,18 @@
                                px-2'></i>
                                 Dashboard
                             </a>
+<a href="[/=appUrl/]/?component_ref=transactions"
+   class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
+
+                                                            [/ if (templateType==="transactions") { /]
+                                                           bg-blue-500 text-white
+                                                           [/}/]
+
+                                                           '>
+    <i class='bi-journal-album text-xl px-2'></i>
+    Transactions
+</a>
+
                             <a href="[/=appUrl/]/?component_ref=deposits"
                                class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
 
@@ -123,7 +162,7 @@
 
                                '>
                                 <i class='bi-cash-stack text-xl px-2'></i>
-                                Deposit money
+                                Deposit history
                             </a><a href="[/=appUrl/]/?component_ref=withdrawals"
                                class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
 
@@ -132,25 +171,7 @@
                                [/}/]
                                '>
                                 <i class='bi-download text-xl px-2'></i>
-                                Withdraw money
-                            </a><a href="[/=appUrl/]/?component_ref=dashboard"
-                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
-
-                                [/ if (templateType==="invest") { /]
-                               bg-blue-500 text-white
-                               [/}/]
-                               '>
-                                <i class='bi-box-arrow-up-right text-xl px-2'></i>
-                                Total Investment
-                            </a><a href="[/=appUrl/]/?component_ref=transactions"
-                               class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
-                                [/ if (templateType==="transactions") { /]
-                               bg-blue-500 text-white
-                               [/}/]
-
-                               '>
-                                <i class='bi-journal-album text-xl px-2'></i>
-                                Transactions
+                                Withdrawal history
                             </a><a href="[/=appUrl/]/?component_ref=notifications"
                                class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
                                 [/ if (templateType==="notifications") { /]
@@ -202,16 +223,18 @@
                         </div>
                         <div>
 
-                            <div class='relative inline-block'>
+                            <div class='relative inline-block'
+                                 title='[/= notificationCount /] notification(s)'>
                                 <i
                                    class='bi-bell text-xl inline-block px-3 py-2 bg-gray-700 text-white rounded-full'></i>
                                 <span
                                       class='bg-red-500 text-sm absolute bottom-9 right-1 text-white rounded-full px-2'>
-                                    7 </span>
+                                    [/= notificationCount > 0 ? notificationCount : null /] </span>
                             </div>
                             &nbsp;&nbsp;&nbsp;
-                            <i
-                               class='bi-person text-xl inline-block px-3 py-2 bg-gray-700 text-white rounded-full'></i>
+                            <a href='[/=appUrl/]/?component_ref=settings'><i
+                                   title="[/= auth.user.firstname + ' ' + auth.user.lastname /]"
+                                   class='bi-person text-xl inline-block px-3 py-2 bg-gray-700 text-white rounded-full'></i></a>
 
                         </div>
 
@@ -225,39 +248,29 @@
                     <div class=' '>
                         <div class='flex flex-row justify-around space-x-8 items-center  mt-6'>
 
+
                             <div class='py-16 bg-gray-100  flex-1 mx-auto text-center  '>
-                                <div
-                                     class='flex flex-row justify-between px-12 self-center items-center'>
+                                <div class='flex flex-row justify-between px-12 self-center items-center'>
                                     <p class='text-center text-2xl inline-block  text-gray-700'>
-                                        Deposit
+                                        Wallet
                                         <br>
-                                        <span class='py-2 text-base'> $500.00 </span>
+                                        <span class='py-2 text-base'> $[/= req.user.wallet /] </span>
                                     </p>
                                     <i
-                                       class='bi-cash      text-4xl inline-block px-5  py-4 bg-gray-700 text-white rounded-full'></i>
+                                       class='bi-wallet2      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
                                 </div>
                             </div>
+
+
+
 
                             <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
                                 <div
                                      class='flex flex-row justify-between px-12 self-center items-center'>
                                     <p class='text-center text-2xl inline-block  text-gray-700'>
-                                        Withdraw
+                                        Bonus
                                         <br>
-                                        <span class='py-2 text-base'> $500.00 </span>
-                                    </p>
-                                    <i
-                                       class='bi-download      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
-                                </div>
-                            </div>
-
-                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
-                                <div
-                                     class='flex flex-row justify-between px-12 self-center items-center'>
-                                    <p class='text-center text-2xl inline-block  text-gray-700'>
-                                        Invest
-                                        <br>
-                                        <span class='py-2 text-base'> $500.00 </span>
+                                        <span class='py-2 text-base'> $[/= req.user.bonus /] </span>
                                     </p>
                                     <i
                                        class='bi-graph-up      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
@@ -270,31 +283,19 @@
 
                         <div class='flex flex-row justify-evenly space-x-6 items-center  mt-6'>
 
-                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center  '>
-                                <div
-                                     class='flex flex-row justify-between px-12 self-center items-center'>
+                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
+                                <div class='flex flex-row justify-between px-12 self-center items-center'>
                                     <p class='text-center text-2xl inline-block  text-gray-700'>
-                                        Wallet
+                                        Total Withdrawal
                                         <br>
-                                        <span class='py-2 text-base'> $500.00 </span>
+                                        <span class='py-2 text-base'> $[/= req.user.withdrawals /] </span>
                                     </p>
                                     <i
-                                       class='bi-wallet2      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                                       class='bi-download      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
                                 </div>
                             </div>
 
-                            <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
-                                <div
-                                     class='flex flex-row justify-between px-12 self-center items-center'>
-                                    <p class='text-center text-2xl inline-block  text-gray-700'>
-                                        Referral
-                                        <br>
-                                        <span class='py-2 text-base'> $500.00 </span>
-                                    </p>
-                                    <i
-                                       class='bi-link      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
-                                </div>
-                            </div>
+
 
                             <div class='py-16 bg-gray-100  flex-1 mx-auto text-center '>
                                 <div
@@ -302,7 +303,7 @@
                                     <p class='text-center text-2xl inline-block  text-gray-700'>
                                         Profit
                                         <br>
-                                        <span class='py-2 text-base'> $500.00 </span>
+                                        <span class='py-2 text-base'> $[/= req.user.profits /] </span>
                                     </p>
                                     <i
                                        class='bi-currency-exchange    text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>

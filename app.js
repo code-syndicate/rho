@@ -3,49 +3,24 @@ var expressSession = require('express-session');
 var morgan = require('morgan');
 var express = require('express');
 var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
 var routes = require('./routes');
 var flashMessages = require('connect-flash');
 var middlewares = require('./middlewares');
 var User = require('./models/user');
 var startDb = require('./models/index');
+var MongoDBStore = require('connect-mongodb-session')(expressSession);
 
-passport.use(
-	new localStrategy(
-		{usernameField: 'email', passwordField: 'password'},
-		function (username, password, done) {
-			User.findOne({email: username}).exec((err, user) => {
-				if (err) return done(err);
-				if (!user) {
-					return done(null, false, {
-						message: 'Invalid email or password',
-					});
-				}
-
-				if (!user.verifyPassword(password)) {
-					return done(null, false, {
-						message: 'Incorrect email or password',
-					});
-				}
-
-				return done(null, user);
-			});
-		}
-	)
-);
-
-passport.serializeUser(function (user, done) {
-	done(null, user._id);
+const sessionStore = new MongoDBStore({
+	uri: process.env.DATABASE_URL,
+	collection: 'sessionStores',
 });
 
-passport.deserializeUser(function (id, done) {
-	User.findById(id, (err, user) => {
-		done(err, user);
-	});
+sessionStore.on('error', (err) => {
+	console.log(err);
 });
+const threeDays = 3 * 24 * 60 * 60 * 1000;
 
 const app = express();
-const Oneday = 24 * 60 * 60 * 1000;
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -53,13 +28,10 @@ app.use(express.static('public'));
 app.use(
 	expressSession({
 		secret: process.env.COOKIE_SECRET,
-		saveUninitialized: false,
+		saveUninitialized: true,
 		resave: false,
-		cookie: {
-			maxAge: Oneday,
-			sameSite: 'lax',
-			signed: true,
-		},
+		store: sessionStore,
+		cookie: {signed: true, maxAge: threeDays},
 	})
 );
 app.use(flashMessages());
@@ -72,6 +44,12 @@ app.set('view options', {
 	closeDelimiter: ']',
 	delimiter: '/',
 });
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+
+passport.deserializeUser(User.deserializeUser());
 
 app.use(middlewares.context);
 

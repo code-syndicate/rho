@@ -12,54 +12,27 @@
                 <th>
                     Date
                 </th>
-                <th>
-                    Status
-                </th>
+
 
                 <th>
                     Action
                 </th>
             </tr>
 
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> Received money from Morgan </td>
-                <td> 12.02pm, Jan 03, 2021 </td>
-                <td> Read </td>
-                <td> <i class='bi-x text-white bg-red-500  inline-block py-1 px-2'></i> </td>
+
+
+            [/ notifications.map((t)=>{ /]
+            
+            <tr class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
+                <td class="py-4 PX-2"> [/=t.description/] </td>
+                <td class='px-2 '> [/=t.date/] </td>
+                <td> <a href='/banking/notifications/[/=t._id/]/delete/'><i title='Mark as read'
+                           class='bi-check-lg text-white bg-green-500 hover:bg-green-600  inline-block py-1 px-2'></i></a>
+                </td>
+
             </tr>
 
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> Received money from Morgan </td>
-                <td> 12.02pm, Jan 03, 2021 </td>
-                <td> Read </td>
-                <td> <i class='bi-x text-white bg-red-500  inline-block py-1 px-2'></i> </td>
-            </tr>
-
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> Received money from Morgan </td>
-                <td> 12.02pm, Jan 03, 2021 </td>
-                <td> Read </td>
-                <td> <i class='bi-x text-white bg-red-500  inline-block py-1 px-2'></i> </td>
-            </tr>
-
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> Received money from Morgan </td>
-                <td> 12.02pm, Jan 03, 2021 </td>
-                <td> Read </td>
-                <td> <i class='bi-x text-white bg-red-500  inline-block py-1 px-2'></i> </td>
-            </tr>
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> Received money from Morgan </td>
-                <td> 12.02pm, Jan 03, 2021 </td>
-                <td> Read </td>
-                <td> <i class='bi-x text-white bg-red-500  inline-block py-1 px-2'></i> </td>
-            </tr>
-
+            [/ }) /]
 
         </table>
     </div>

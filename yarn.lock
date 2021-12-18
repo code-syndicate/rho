@@ -77,6 +77,15 @@ append-field@^1.0.0:
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-2.0.0.tgz#52520b8ae5b569215b354efc0caa3fe1e45a8adc"
   integrity sha512-lYe4Gx7QT+MKGbDsA+Z+he/Wtef0BiwDOlK/XkBrdfsh9J/jPPXbX0tE9x9cl27Tmu5gg3QUbUrQYa/y+KOHPQ==
 
+archetype@0.13.x:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/archetype/-/archetype-0.13.0.tgz#2aa5329f5c8462f07526db3ec6402d97ae644cfe"
+  integrity sha512-ts/rng/A4UQPw1ZuQWWZvR2T0q2S5+zQGBH0RPsSlmyIAsZuIGEm1rgRga2NJnHODBbW/jVWMZIWbtlEyrS7JQ==
+  dependencies:
+    lodash.clonedeep "4.x"
+    lodash.set "4.x"
+    mpath "0.8.x"
+
 are-we-there-yet@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/are-we-there-yet/-/are-we-there-yet-2.0.0.tgz#372e0e7bd279d8e94c653aaa1f67200884bf3e1c"
@@ -247,10 +256,23 @@ concat-stream@^1.5.2:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+connect-ensure-login@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/connect-ensure-login/-/connect-ensure-login-0.1.1.tgz#174dcc51243b9eac23f8d98215aeb6694e2e8a12"
+  integrity sha1-F03MUSQ7nqwj+NmCFa62aU4uihI=
+
 connect-flash@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/connect-flash/-/connect-flash-0.1.1.tgz#d8630f26d95a7f851f9956b1e8cc6732f3b6aa30"
   integrity sha1-2GMPJtlaf4UfmVax6MxnMvO2qjA=
+
+connect-mongodb-session@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/connect-mongodb-session/-/connect-mongodb-session-3.1.1.tgz#1e7b114dffad870a899d3106d8e7a275ec8c17aa"
+  integrity sha512-HBfQW7lRLb64DopgxL4Pv8/iay4HcS1WU7YJfi7B8UbBPZGzVEHx67mx8xP5c2rWUMCQ4Xi/u4GUSC7e90Hhtw==
+  dependencies:
+    archetype "0.13.x"
+    mongodb "4.x"
 
 console-control-strings@^1.0.0, console-control-strings@^1.1.0:
   version "1.1.0"
@@ -508,6 +530,11 @@ gauge@^4.0.0:
     strip-ansi "^6.0.1"
     wide-align "^1.1.2"
 
+generaterr@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/generaterr/-/generaterr-1.5.0.tgz#b0ceb6cc5164df2a061338cc340a8615395c52fc"
+  integrity sha1-sM62zFFk3yoGEzjMNAqGFTlcUvw=
+
 glob@^7.1.3:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
@@ -640,6 +667,16 @@ kareem@2.3.2:
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.3.2.tgz#78c4508894985b8d38a0dc15e1a8e11078f2ca93"
   integrity sha512-STHz9P7X2L4Kwn72fA4rGyqyXdmrMSdxqHx9IXon/FXluXieaFA6KJ2upcHAHxQPQ0LeM/OjLrhFxifHewOALQ==
 
+lodash.clonedeep@4.x:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
+lodash.set@4.x:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+  integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
+
 lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
@@ -743,6 +780,14 @@ mongodb-connection-string-url@^2.2.0:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
+mongodb-connection-string-url@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/mongodb-connection-string-url/-/mongodb-connection-string-url-2.3.2.tgz#8499f99d9f317e9fa76c16c449451dbaabe477d7"
+  integrity sha512-2LkmS0ny7LamAyhEs2Q+zuFFxeGNSc2DaGHBevjqkoPt7bgh+67mg1sFU6awnMsdLKpdEt7zUy466K9x7RsYcQ==
+  dependencies:
+    "@types/whatwg-url" "^8.2.1"
+    whatwg-url "^11.0.0"
+
 mongodb@4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.2.1.tgz#c167db158ab0bf6552b3f9c91b396cb4100c2f04"
@@ -751,6 +796,17 @@ mongodb@4.2.1:
     bson "^4.6.0"
     denque "^2.0.1"
     mongodb-connection-string-url "^2.2.0"
+  optionalDependencies:
+    saslprep "^1.0.3"
+
+mongodb@4.x:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.2.2.tgz#cd70568bd96003877e35358ad17a0c5de35c6dfd"
+  integrity sha512-zt8rCTnTKyMQppyt63qMnrLM5dbADgUk18ORPF1XbtHLIYCyc9hattaYHi0pqMvNxDpgGgUofSVzS+UQErgTug==
+  dependencies:
+    bson "^4.6.0"
+    denque "^2.0.1"
+    mongodb-connection-string-url "^2.3.2"
   optionalDependencies:
     saslprep "^1.0.3"
 
@@ -780,7 +836,7 @@ morgan@^1.10.0:
     on-finished "~2.3.0"
     on-headers "~1.0.2"
 
-mpath@0.8.4:
+mpath@0.8.4, mpath@0.8.x:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.8.4.tgz#6b566d9581621d9e931dd3b142ed3618e7599313"
   integrity sha512-DTxNZomBcTWlrMW76jy1wvV37X/cNNxPW1y2Jzd4DZkAaC5ZGsm8bfGfNOthcDuRJujXLqiuS6o3Tpy0JEoh7g==
@@ -899,6 +955,15 @@ parseurl@~1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.3.tgz#9da19e7bee8d12dff0513ed5b76957793bc2e8d4"
   integrity sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==
+
+passport-local-mongoose@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/passport-local-mongoose/-/passport-local-mongoose-6.1.0.tgz#341db91359ac855057476e0f2d795f6a6c5f686b"
+  integrity sha512-kxRDejpBXoPmWau1RCrmEeNYEXGG9ec4aDYjd0pFAHIEAzZ0RXKn581ISfjpHZ1zZLoCCM2pWUo4SfGHNJNwnw==
+  dependencies:
+    generaterr "^1.5.0"
+    passport-local "^1.0.0"
+    scmp "^2.1.0"
 
 passport-local@^1.0.0:
   version "1.0.0"
@@ -1075,6 +1140,11 @@ sax@>=0.6.0:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
+
+scmp@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/scmp/-/scmp-2.1.0.tgz#37b8e197c425bdeb570ab91cc356b311a11f9c9a"
+  integrity sha512-o/mRQGk9Rcer/jEEw/yw4mwo3EU/NvYvp577/Btqrym9Qy5/MdWGBqipbALgd2lrdWTJ5/gqDusxfnQBxOxT2Q==
 
 semver@^6.0.0:
   version "6.3.0"

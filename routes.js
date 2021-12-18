@@ -2,13 +2,29 @@ var router = require('express').Router();
 var bankingControllers = require('./controllers/banking');
 var userControllers = require('./controllers/user');
 var passport = require('passport');
+var connectEnsureLogin = require('connect-ensure-login');
+
+router.get(
+	'/banking/notifications/:notificationId/delete/',
+	connectEnsureLogin.ensureLoggedIn(),
+	bankingControllers.deleteNotification
+);
+
+router.post(
+	'/banking/authentications/register-deposit/',
+	connectEnsureLogin.ensureLoggedIn('/banking/authentications/log-in/'),
+
+	bankingControllers.registerDeposit
+);
+router.post(
+	'/banking/authentications/register-withdrawal/',
+	connectEnsureLogin.ensureLoggedIn('/banking/authentications/log-in/'),
+	bankingControllers.registerWithdrawal
+);
 
 router.get(
 	'/banking/app/',
-	// passport.authenticate('local', {
-	// 	failureRedirect: '/banking/authentications/log-in/',
-	// 	failureFlash: 'Please sign in to continue',
-	// }),
+	connectEnsureLogin.ensureLoggedIn('/banking/authentications/log-in/'),
 	bankingControllers.index
 );
 router.post(
@@ -31,17 +47,14 @@ router.get('/banking/authentications/sign-up/', userControllers.signUpPage);
 
 router.get(
 	'/banking/verifications/email-verification/',
-	passport.authenticate('local', {
-		failureRedirect: '/banking/authentications/log-in/',
-	}),
+	connectEnsureLogin.ensureLoggedIn('/banking/authentications/log-in/'),
 	userControllers.emailVerificationPage
 );
 
 router.post(
 	'/banking/verifications/email-verification/',
-	passport.authenticate('local', {
-		failureRedirect: '/banking/authentications/log-in/',
-	}),
+	connectEnsureLogin.ensureLoggedIn('/banking/authentications/log-in/'),
+
 	userControllers.verifyEmail
 );
 

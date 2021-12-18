@@ -136,45 +136,47 @@ const validateSignUpData = [
 	}),
 ];
 
-function createUser(req, res, next) {
-	avatarUpload(req, res, function (uploadError) {
-		const errors = validationResult(req);
+ function createUser(req, res, next) {
+		avatarUpload(req, res, async function (uploadError) {
+			const errors = validationResult(req);
 
-		if (!errors.isEmpty()) {
-			req.flash('formErrors', errors.array());
-			res.status(303).redirect(req.url);
-		} else if (uploadError) {
-			req.flash('formErrors', [{msg: uploadError.message}]);
-			res.status(303).redirect(req.url);
-			return;
-		} else {
-			const fileUrl = req.file ? req.file.location : null;
-			const newUser = User({
-				firstname: req.body.firstname,
-				lastname: req.body.lastname,
-				email: req.body.email,
-				permissions: ['deposit'],
-				avatar: fileUrl,
-				address: {
-					street: req.body.street,
-					city: req.body.city,
-					state: req.body.state,
-					country: req.body.country,
-					zipcode: req.body.zipcode,
-				},
-			});
+			if (!errors.isEmpty()) {
+				req.flash('formErrors', errors.array());
+				res.status(303).redirect(req.url);
+			} else if (uploadError) {
+				req.flash('formErrors', [{msg: uploadError.message}]);
+				res.status(303).redirect(req.url);
+				return;
+			} else {
+				const fileUrl = req.file ? req.file.location : null;
+				const newUser = await User.register(
+					{
+						firstname: req.body.firstname,
+						lastname: req.body.lastname,
+						email: req.body.email,
+						permissions: ['deposit'],
+						avatar: fileUrl,
+						address: {
+							street: req.body.street,
+							city: req.body.city,
+							state: req.body.state,
+							country: req.body.country,
+							zipcode: req.body.zipcode,
+						},
+					},
+					req.body.password2
+				);
 
-			newUser.save();
+				req.login(newUser, function (err) {
+					if (err) next(err);
 
-			newUser.setPassword(req.body.password2);
-			req.login(newUser, function (err) {
-				if (err) next(err);
+					console.log('\n\n', newUser, '\n\n');
 
-				res.status(303).redirect('/banking/app/');
-			});
-		}
-	});
-}
+					res.status(303).redirect('/banking/app/');
+				});
+			}
+		});
+ }
 
 function emailVerificationPage(req, res) {
 	const resendCode = req.query.resend;

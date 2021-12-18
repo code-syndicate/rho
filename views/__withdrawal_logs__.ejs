@@ -21,44 +21,17 @@
                 </th>
             </tr>
 
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> 12/11/2021 </td>
-                <td> QE764597758T8IGIU8T7 </td>
-                <td> $4,500 </td>
-                <td> Payment received from James </td>
+
+            [/ withdrawals.map((t)=>{ /]
+
+            <tr class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
+                <td class="py-4 PX-2"> [/= t.date /] </td>
+                <td class='px-2 '> [/=t.ref/] </td>
+                <td class='px-2'> $[/=t.amount/] </td>
+                <td class='text-sm overflow-x-scroll px-2 '> [/=t.details/] </td>
             </tr>
 
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> 12/11/2021 </td>
-                <td> QE764597758T8IGIU8T7 </td>
-                <td> $4,500 </td>
-                <td> Payment received from James </td>
-            </tr>
-
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> 12/11/2021 </td>
-                <td> QE764597758T8IGIU8T7 </td>
-                <td> $4,500 </td>
-                <td> Payment received from James </td>
-            </tr>
-
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> 12/11/2021 </td>
-                <td> QE764597758T8IGIU8T7 </td>
-                <td> $4,500 </td>
-                <td> Payment received from James </td>
-            </tr>
-            <tr
-                class='text-center  hover:bg-gray-200 cursor-pointer text-base text-black bg-gray-100'>
-                <td class="py-4"> 12/11/2021 </td>
-                <td> QE764597758T8IGIU8T7 </td>
-                <td> $4,500 </td>
-                <td> Payment received from James </td>
-            </tr>
+            [/ }) /]
 
 
         </table>
