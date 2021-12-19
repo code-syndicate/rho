@@ -152,17 +152,21 @@ async function index(req, res) {
 
 	let transactions;
 
-	const deposits = await Deposit.find({client: req.user.id}).lean().exec();
-	const withdrawals = await Withdrawal.find({client: req.user.id})
+	let deposits = await Deposit.find({client: req.user.id}).lean().exec();
+	deposits = deposits.slice(0, 10);
+	let withdrawals = await Withdrawal.find({client: req.user.id})
 		.lean()
 		.exec();
+	withdrawals = withdrawals.slice(0, 10);
 
-	const notifications = await Notification.find({
+	let notifications = await Notification.find({
 		listener: req.user.id,
 		status: 'UNREAD',
 	})
 		.lean()
 		.exec();
+
+	notifications = notifications.slice(0, 10);
 
 	transactions = deposits.concat(withdrawals);
 
