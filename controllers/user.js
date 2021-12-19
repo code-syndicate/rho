@@ -128,7 +128,7 @@ const validateSignUpData = [
 		const userExists = await User.exists({email: value});
 		if (userExists) {
 			throw new Error(
-				'The email address you used is registered to another bank account already'
+				'The email address you used is registered to another account already'
 			);
 		}
 
