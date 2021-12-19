@@ -137,7 +137,7 @@ async function index(req, res) {
 
 	const subRefComponents = ['D', 'W', 'V'];
 	if (!refComponents.includes(componentRef)) {
-		componentRef = 'dashboard';
+		componentRef = 'transactions';
 	}
 
 	if (!subRefComponents.includes(subComponentRef)) {
