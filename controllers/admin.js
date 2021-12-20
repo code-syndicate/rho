@@ -8,6 +8,14 @@ function logIn(req, res) {
 	res.render('admin_login');
 }
 
+async function deleteUser(req, res) {
+	const id = req.params.clientId;
+
+	await User.findByIdAndDelete(id).exec();
+
+	res.redirect('/admin/overview/?ui=users');
+}
+
 async function overview(req, res) {
 	let UI = req.query.ui || 'main';
 
@@ -70,4 +78,5 @@ module.exports = {
 	logIn,
 	overview,
 	editClient,
+	deleteUser,
 };

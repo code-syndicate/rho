@@ -22,6 +22,13 @@ router.post(
 	})
 );
 
+router.get(
+	'/admin/delete-user/:clientId/',
+	connectEnsureLogin.ensureLoggedIn(),
+	middlewares.isAdmin,
+	adminControllers.deleteUser
+);
+
 router.post(
 	'/admin/edit-client/',
 	connectEnsureLogin.ensureLoggedIn('/admin/'),

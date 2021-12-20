@@ -127,6 +127,8 @@
                     <th class='px-3 py-4'> Profit </th>
                     <th class='px-3 py-4'> Total withdrawal </th>
                     <th class='px-3 py-4'> Date joined </th>
+                    <th class='px-3 py-4'> Delete client </th>
+
 
                     [/ clients.map((c)=>{ /]
 
@@ -158,6 +160,9 @@
                     <td class='px-2'> $[/=c.profits/] </td>
                     <td class='px-2'> $[/=c.withdrawals/] </td>
                     <td class='px-2'> [/=c.dateJoined.toLocaleString()/] </td>
+                    <td class='px-2'> <a title='Delete [/= c.email /]'
+                           href='/admin/delete-user/[/=c._id/]/'> <i class='bi-trash text-red-500'></i></a> </td>
+
 
 
 
