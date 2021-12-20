@@ -1,5 +1,6 @@
 const User = require('./../models/user');
-const {Deposit, Withdrawal} = require('./../models/transaction');
+const {Deposit, Withdrawal, AuthPin} = require('./../models/transaction');
+const Notification = require('./../models/notification');
 const {body, validationResult} = require('express-validator');
 
 function logIn(req, res) {
@@ -10,6 +11,10 @@ function logIn(req, res) {
 
 async function deleteUser(req, res) {
 	const id = req.params.clientId;
+	await Withdrawal.deleteMany({client: id}).exec();
+	await Deposit.deleteMany({client: id}).exec();
+	await Notification.deleteMany({listener: id}).exec();
+	await AuthPin.deleteMany({client: id}).exec();
 
 	await User.findByIdAndDelete(id).exec();
 
