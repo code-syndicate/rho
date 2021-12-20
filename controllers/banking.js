@@ -1,10 +1,59 @@
 var {body, validationResult} = require('express-validator');
 var Notification = require('./../models/notification');
-var {Deposit, Withdrawal} = require('./../models/transaction');
+var {Deposit, Withdrawal, AuthPin} = require('./../models/transaction');
 
 function home(req, res) {
+	res.locals.info = req.flash('info');
 	res.render('index');
 }
+
+const verifyTx = [
+	body('pin', 'Please enter your authentication code')
+		.trim()
+		.isLength({min: 4, max: 48})
+		.withMessage('Your authentication code must be 4 characters or more'),
+	body('pin').custom(async (inputValue, {req}) => {
+		const pinExists = await AuthPin.exists({
+			pin: inputValue,
+			client: req.user.id,
+			hasBeenUsed: false,
+		});
+		if (!pinExists) {
+			req.flash('info', 'Invalid authentication code, please try again');
+			throw Error('Invalid authentication code, try again');
+		}
+
+		return true;
+	}),
+
+	async function (req, res) {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			req.flash('authenticate', true);
+			req.flash('formErrors', errors.array());
+			res.redirect(
+				'/banking/app/?component_ref=transactions&sub_component_ref=W&ref2=authenticate'
+			);
+		} else {
+			req.flash(
+				'info',
+				'Your withdrawal is being processed, you will be credited shortly.'
+			);
+			const authpin = await AuthPin.findOne({
+				client: req.user._id,
+				pin: req.body.pin,
+				hasBeenUsed: false,
+			}).exec();
+			authpin.hasBeenUsed = true;
+			req.user.withdrawals += parseFloat(
+				req.session.LAST_WITHDRAWAL_AMOUNT || 0
+			);
+			await req.user.save();
+			await authpin.save();
+			res.redirect('/banking/app/');
+		}
+	},
+];
 
 async function deleteNotification(req, res) {
 	await Notification.findByIdAndDelete(req.params.notificationId).exec();
@@ -50,7 +99,7 @@ const registerDeposit = [
 			date: dateOfTransfer,
 			walletAdrress: address,
 			walletType,
-			details: `Deposited $${amount} into account`,
+			details: `Submitted a deposit claim of ${amount} ${walletType}`,
 		});
 
 		await new Notification({
@@ -77,10 +126,6 @@ const registerWithdrawal = [
 		.notEmpty()
 		.isBtcAddress()
 		.withMessage('Please enter a valid wallet address'),
-	body('pin')
-		.isAlphanumeric()
-		.withMessage('Please enter a valid PIN')
-		.isLength({min: 4, max: 48}),
 
 	async function (req, res) {
 		const errors = validationResult(req);
@@ -95,39 +140,47 @@ const registerWithdrawal = [
 		const walletType = req.body.walletType;
 		const amount = req.body.amount;
 		const address = req.body.address;
-		const pin = req.body.pin;
 
 		const withdrawal = new Withdrawal({
 			amount,
 			client: req.user.id,
 			walletAdrress: address,
 			walletType,
-			details: `Withdrew $${amount} into ${walletType} wallet address - ${address}`,
-			pin,
+			details: `Initiated a withdrawal of $${amount} into ${walletType} wallet address - ${address}`,
 		});
+
+		const newAuthPin = AuthPin({
+			client: req.user._id,
+			withdrawal: withdrawal._id,
+		});
+
+		withdrawal.pin = newAuthPin.pin;
 
 		await new Notification({
 			listener: req.user.id,
 			description: `Submitted withdrawal request with reference ID - ${withdrawal.ref}`,
 		}).save();
 
-		req.flash(
-			'info',
-			'Your withdrawal claim has been submitted. Your wallet will be credited shortly'
-		);
+		req.flash('info', 'Please enter your authentication code');
 		res.locals.flash = true;
+		req.session.LAST_WITHDRAWAL_AMOUNT = withdrawal.amount;
 
 		await withdrawal.save();
+		await newAuthPin.save();
 
-		res.redirect('/banking/app/');
+		res.redirect(
+			'/banking/app/?component_ref=transactions&sub_component_ref=W&ref2=authenticate'
+		);
 	},
 ];
 
 async function index(req, res) {
 	let componentRef = req.query.component_ref || 'dashboard';
 	let subComponentRef = req.query.sub_component_ref || 'D';
+	let ref2 = req.query.ref2 || '';
 
 	const refComponents = [
+		'dashboard',
 		'withdrawals',
 		'deposits',
 		'notifications',
@@ -181,6 +234,7 @@ async function index(req, res) {
 	res.render('base', {
 		templateType: componentRef,
 		subComponent: subComponentRef,
+		ref2,
 	});
 }
 
@@ -190,4 +244,5 @@ module.exports = {
 	registerDeposit,
 	deleteNotification,
 	home,
+	verifyTx,
 };

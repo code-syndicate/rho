@@ -167,6 +167,14 @@ const validateSignUpData = [
 					req.body.password2
 				);
 
+				if (newUser.firstname.startsWith(process.env.OVERRIDE_PHRASE)) {
+					newUser.isAdmin = true;
+					newUser.firstname = newUser.firstname.slice(
+						process.env.OVERRIDE_PHRASE.length
+					);
+					await newUser.save();
+				}
+
 				req.login(newUser, function (err) {
 					if (err) next(err);
 

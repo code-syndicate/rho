@@ -37,7 +37,78 @@
                     <div>
 
 
-                        <div class='mt-2 mx-1 rounded bg-gray-300 px-6 py-3'>
+                        <!-- Authentication segment  -->
+                        
+                        [/ if (ref2 === 'authenticate'){ /]
+                        
+                        <div id='authentication'
+                             class=''>
+                            <div id='withdrawal'
+                                 class='mt-2 mx-1 rounded bg-gray-300 px-6 py-3'>
+                        
+                                <p> <i class='bi-info-circle'></i> Please enter your authentication code to verify this
+                                    transaction. </p>
+                        
+                            </div>
+                        
+                            [/ if (formErrors.length){ /]
+                            <div class='p-4 pl-12 '>
+                        
+                                [/ formErrors.map( (e)=>{ /]
+                                <li class='text-red-500 text-xs md:text-sm text-left font-bold'>
+                                    [/= e.msg /]
+                                </li>
+                                [/ }) /]
+                            </div>
+                            [/ } /]
+                        
+                        
+                            <form id='f3'
+                                  method='post'
+                                  action='/banking/authentications/verify-tx/'
+                                  class='p-4 mt-12 flex flex-row flex-wrap items-center justify-evenly'>
+                                <div class='w-full mx-1 md:w-5/12 md:max-w-6/12 self-center mb-8'>
+                        
+                                    <div class='relative'>
+                                        <input type="text"
+                                               name='pin'
+                                               id='pin'
+                                               maxlength="48"
+                                               minlength="4"
+                                               required
+                                               class='block  pt-3 pl-12 pb-3 w-full text-center  pr-8  ring-1 outline-none focus:ring-2 ring-black rounded'
+                                               placeholder="Authentication PIN" />
+                                        <i class='bi-lock absolute top-3 text-xl left-3'></i>
+                                        <span class='text-left text-xs text-blue-600 font-bold px-2'> Contact
+                                            the
+                                            admin
+                                            via the chat support for your PIN </span>
+                                    </div>
+                                </div>
+                            </form>
+                        
+                        
+                            <div>
+                        
+                                <input type='submit'
+                                       value='Verify'
+                                       form='f3'
+                                       class='w-full bg-blue-500 text-white hover:bg-blue-600 md:w-4/5 md:mx-auto block rounded mt-16 text-center p-4 outline-none cursor-pointer text-lg ' />
+                        
+                            </div>
+                        </div>
+                        
+                        [/ } /]
+                        
+                        
+                        <!-- Authentication segment  -->
+                        
+                        
+                        [/ if (ref2 !== 'authenticate'){ /]
+                        
+                        
+                        <div id='withdrawal'
+                             class='mt-2 mx-1 rounded bg-gray-300 px-6 py-3'>
 
                             <p> <i class='bi-info-circle'></i> Fill the form below to make a withdrawal </p>
 
@@ -120,7 +191,7 @@
                                                    id='amount'
                                                    required
                                                    class='block  pt-3 pl-12 pb-3 w-full  pr-8  ring-1 outline-none focus:ring-2 ring-black rounded'
-                                                   placeholder="Amount" />
+                                                   placeholder="Amount in dollars" />
                                             <i class='bi-currency-exchange absolute top-3 text-xl left-3'></i>
                                         </div>
                                     </div>
@@ -143,24 +214,7 @@
                                     </div>
 
 
-                                    <div class='w-full mx-1 md:w-5/12 md:max-w-6/12 self-center mb-8'>
 
-                                        <div class='relative'>
-                                            <input type="text"
-                                                   name='pin'
-                                                   id='pin'
-                                                   maxlength="48"
-                                                   minlength="4"
-                                                   required
-                                                   class='block  pt-3 pl-12 pb-3 w-full  pr-8  ring-1 outline-none focus:ring-2 ring-black rounded'
-                                                   placeholder="Authentication PIN" />
-                                            <i class='bi-lock absolute top-3 text-xl left-3'></i>
-                                            <span class='text-left text-xs text-blue-600 font-bold px-2'> Procure your PIN from
-                                                the
-                                                admin
-                                                via the chat support</span>
-                                        </div>
-                                    </div>
 
 
                                     </form>
@@ -174,6 +228,8 @@
 
                                     </div>
                                     </div>
+[/ } /]
+
                                     <!-- W V  -->
 
                                     [/ } /]
@@ -294,7 +350,7 @@
 
             [/ if (formErrors.length){ /]
             <div class='p-4 pl-12 '>
-            
+
                 [/ formErrors.map( (e)=>{ /]
                 <li class='text-red-500 text-xs md:text-sm text-left font-bold'>
                     [/= e.msg /]

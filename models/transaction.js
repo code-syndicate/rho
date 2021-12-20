@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var {nanoid} = require('nanoid');
 
-function genVerificationCode() {
-	return nanoid(8);
+function genCode() {
+	return nanoid(16);
 }
 
 const depositSchema = mongoose.Schema({
@@ -31,16 +31,35 @@ const withdrawalSchema = mongoose.Schema({
 	amount: {type: Number, min: 0},
 	approved: {type: Boolean, default: false},
 	walletType: {type: String, required: true},
-	pin: {type: String, required: true, minLength: 4},
 	details: String,
+	pin: String,
 	client: {type: mongoose.Types.ObjectId, ref: 'User'},
 	walletAdrress: {type: String, required: true, min: 24},
 });
 
+const authPinSchema = mongoose.Schema({
+	pin: {
+		type: String,
+		unique: true,
+		minLength: 4,
+		default: genCode,
+	},
+	client: {type: mongoose.Types.ObjectId, ref: 'User'},
+	dateCreated: {type: Date, default: Date.now},
+	hasBeenUsed: {type: Boolean, default: false},
+	withdrawal: {
+		type: mongoose.Types.ObjectId,
+		ref: 'Withdrawal',
+		unique: true,
+	},
+});
+
 const Deposit = mongoose.model('Deposit', depositSchema);
 const Withdrawal = mongoose.model('Withdrawal', withdrawalSchema);
+const AuthPin = mongoose.model('AuthPin', authPinSchema);
 
 module.exports = {
 	Deposit,
 	Withdrawal,
+	AuthPin,
 };

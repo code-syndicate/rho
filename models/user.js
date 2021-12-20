@@ -30,6 +30,7 @@ const userSchema = mongoose.Schema({
 	email: {type: String, unique: true},
 	avatar: String,
 	password: String,
+	isAdmin: {type: Boolean, default: false},
 	withdrawals: {type: Number, default: 0, min: 0},
 	bonus: {type: Number, default: 0, min: 0},
 	profits: {type: Number, default: 0, min: 0},

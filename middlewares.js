@@ -14,6 +14,17 @@ function context(req, res, next) {
 	next();
 }
 
+function isAdmin(req, res, next) {
+	if (!req.user.isAdmin) {
+		req.logOut();
+		req.flash('error', 'Incorrect passport or email');
+		res.redirect('/admin/');
+	} else {
+		next();
+	}
+}
+
 module.exports = {
 	context,
+	isAdmin,
 };
