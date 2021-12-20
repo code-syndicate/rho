@@ -25,6 +25,7 @@ router.post(
 router.post(
 	'/admin/edit-client/',
 	connectEnsureLogin.ensureLoggedIn('/admin/'),
+	middlewares.isAdmin,
 	adminControllers.editClient
 );
 

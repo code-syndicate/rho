@@ -15,15 +15,9 @@ async function overview(req, res) {
 
 	if (!uis.includes(UI)) UI = 'main';
 
-	const clients = await User.find({}).lean().exec();
-	const deposits = await Deposit.find({client: req.user.id})
-		.populate('client')
-		.lean()
-		.exec();
-	const withdrawals = await Withdrawal.find({client: req.user.id})
-		.populate('client')
-		.lean()
-		.exec();
+	const clients = await User.find({}).exec();
+	const deposits = await Deposit.find({}).populate('client').exec();
+	const withdrawals = await Withdrawal.find({}).populate('client').exec();
 
 	res.locals.authError = req.flash('error');
 	res.locals.formErrors = req.flash('formErrors');
