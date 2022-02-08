@@ -156,7 +156,7 @@ async function createUser(req, res, next) {
 		}
 
 		console.log('\n\n', fileUrl);
-		const newUser = await User1.register(
+		const newUser = await User.register(
 			{
 				firstname: req.body.firstname,
 				lastname: req.body.lastname,
