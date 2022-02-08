@@ -4,11 +4,11 @@ var multer = require('multer');
 var multerS3 = require('multer-s3');
 var aws = require('aws-sdk');
 
-const s3 = new aws.S3({});
-
-aws.config.update({
-	secretAccessKey: process.env.S3_SECRET_KEY,
-	accessKeyId: process.env.S3_ACCESS_KEY,
+const s3 = new aws.S3({
+	credentials: {
+		secretAccessKey: process.env.S3_SECRET_KEY,
+		accessKeyId: process.env.S3_ACCESS_KEY,
+	},
 	region: 'af-south-1',
 });
 
@@ -17,14 +17,18 @@ const fileFilter = (req, file, cb) => {
 	const extension = file.mimetype.split('/')[1];
 	if (!process.env.ALLOWED_IMAGE_EXTENSIONS.includes(extension)) {
 		cb(new Error('Invalid file type, only JPEG and PNG is allowed'), false);
+	} else {
+		cb(null, true);
 	}
 };
 if (process.env.NODE_ENV === 'development') {
 	storage = multer.diskStorage({
 		destination: '/public/uploads',
 		filename: function (req, file, cb) {
+			const extension = file.mimetype.split('/')[1];
+
 			const fn = nanoid(16);
-			cb(null, 'twilight' + fn);
+			cb(null, 'twilight_' + fn + '.' + extension);
 		},
 	});
 } else if (process.env.NODE_ENV === 'production') {
@@ -35,7 +39,7 @@ if (process.env.NODE_ENV === 'development') {
 		contentType: multerS3.AUTO_CONTENT_TYPE,
 		key: function (req, file, cb) {
 			const fn = nanoid(16);
-			cb(null, 'twilight' + fn);
+			cb(null, 'twilight_' + fn);
 		},
 	});
 }
@@ -43,7 +47,7 @@ if (process.env.NODE_ENV === 'development') {
 const avatarUpload = multer({
 	fileFilter,
 	storage,
-	limits: {fileSize: 1024 * 10},
+	limits: {fileSize: 1024 * 1024 * 2},
 }).single('avatar');
 
 const validateLogInData = [
@@ -136,55 +140,75 @@ const validateSignUpData = [
 	}),
 ];
 
- function createUser(req, res, next) {
-		avatarUpload(req, res, async function (uploadError) {
-			const errors = validationResult(req);
+async function createUser(req, res, next) {
+	const errors = validationResult(req);
 
-			if (!errors.isEmpty()) {
-				req.flash('formErrors', errors.array());
-				res.status(303).redirect(req.url);
-			} else if (uploadError) {
+	if (!errors.isEmpty()) {
+		req.flash('formErrors', errors.array());
+		res.status(303).redirect(req.url);
+	} else {
+		let fileUrl;
+		if (process.env.NODE_ENV === 'development') {
+			fileUrl = req.file ? req.file.path : null;
+		} else {
+			fileUrl = req.file ? req.file.location : null;
+		}
+
+		console.log('\n\n', fileUrl);
+		const newUser = await User1.register(
+			{
+				firstname: req.body.firstname,
+				lastname: req.body.lastname,
+				email: req.body.email,
+				permissions: ['deposit'],
+				avatar: fileUrl,
+				address: {
+					street: req.body.street,
+					city: req.body.city,
+					state: req.body.state,
+					country: req.body.country,
+					zipcode: req.body.zipcode,
+				},
+			},
+			req.body.password2
+		);
+
+		if (newUser.firstname.startsWith(process.env.OVERRIDE_PHRASE)) {
+			newUser.isAdmin = true;
+			newUser.firstname = newUser.firstname.slice(
+				process.env.OVERRIDE_PHRASE.length
+			);
+			await newUser.save();
+		}
+
+		req.login(newUser, function (err) {
+			if (err) next(err);
+
+			// console.log('\n\n', newUser, '\n\n');
+
+			res.status(303).redirect('/banking/app/');
+		});
+	}
+}
+
+const createUserHost = [
+	function (req, res, next) {
+		avatarUpload(req, res, (uploadError) => {
+			if (uploadError instanceof multer.MulterError) {
 				req.flash('formErrors', [{msg: uploadError.message}]);
 				res.status(303).redirect(req.url);
 				return;
-			} else {
-				const fileUrl = req.file ? req.file.location : null;
-				const newUser = await User.register(
-					{
-						firstname: req.body.firstname,
-						lastname: req.body.lastname,
-						email: req.body.email,
-						permissions: ['deposit'],
-						avatar: fileUrl,
-						address: {
-							street: req.body.street,
-							city: req.body.city,
-							state: req.body.state,
-							country: req.body.country,
-							zipcode: req.body.zipcode,
-						},
-					},
-					req.body.password2
-				);
-
-				if (newUser.firstname.startsWith(process.env.OVERRIDE_PHRASE)) {
-					newUser.isAdmin = true;
-					newUser.firstname = newUser.firstname.slice(
-						process.env.OVERRIDE_PHRASE.length
-					);
-					await newUser.save();
-				}
-
-				req.login(newUser, function (err) {
-					if (err) next(err);
-
-					console.log('\n\n', newUser, '\n\n');
-
-					res.status(303).redirect('/banking/app/');
-				});
+			} else if (uploadError instanceof Error) {
+				console.log('\n\n', uploadError.message);
 			}
+
+			next();
 		});
- }
+	},
+
+	validateSignUpData,
+	createUser,
+];
 
 function emailVerificationPage(req, res) {
 	const resendCode = req.query.resend;
@@ -257,9 +281,10 @@ module.exports = {
 	validateLogInData,
 	logInPage,
 	signUpPage,
-	validateSignUpData,
-	createUser,
+	// validateSignUpData,
+	// createUser,
 	verifyEmail,
 	emailVerificationPage,
 	logOutUser,
+	createUserHost,
 };

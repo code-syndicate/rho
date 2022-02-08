@@ -80,7 +80,8 @@
             <div class='relative p-4'>
 
 
-                <i class='bi-info-circle text-xl absolute top-0 left-0 p-2 inline-block  rounded-l   rounded-t'></i>
+                <i
+                   class='bi-info-circle text-xl absolute top-0 left-0 p-2 inline-block  rounded-l   rounded-t'></i>
 
                 <i onclick="this.parentElement.parentElement.style.display = 'none'"
                    class='bi-x text-xl absolute top-0 right-0 p-2 inline-block bg-gray-100 hover:bg-gray-300 text-black  cursor-pointer rounded-tr '></i>
@@ -160,7 +161,8 @@
 
         <main class='  md:mx-32 md:my-32'>
 
-            <div class='flex flex-col md:flex-row items-center justify-center md:justify-around md:space-x-8 '>
+            <div
+                 class='flex flex-col md:flex-row items-center justify-center md:justify-around md:space-x-8 '>
 
                 <div class='w-1/4 bg-gray-100 self-start min-h-screen pb-16 hidden md:block '>
 
@@ -173,7 +175,8 @@
                                  alt='Avatar'
                                  class="rounded-full block mx-auto my-4 border-4 border-gray-300" />
 
-                            <h2 class='font-semibold text-center text-gray-700 px-1 text-xl md:text-2xl capitalize'>
+                            <h2
+                                class='font-semibold text-center text-gray-700 px-1 text-xl md:text-2xl capitalize'>
                                 [/= auth.user ? auth.user.firstname + ' ' + auth.user.lastname :
                                 "Anonymous Anonymous" /] </h2>
                             <p class=' text-center px-1 text-base md:text-lg '>
@@ -206,7 +209,7 @@
                                                            '>
                                 <i class='bi-journal-album text-xl px-2'></i>
                                 Transactions
-                                </a>
+                            </a>
 
                             <a href="[/=appUrl/]/?component_ref=deposits"
                                class='py-4 hover:bg-gray-300 capitalize block w-full text-left text-xl px-6
@@ -302,27 +305,55 @@
 
 
 
+                    <div class="md:hidden bg-gray-900 py-8">
+                        <img src="[/= user.avatar || '/07.png' /]"
+                             height="300"
+                             width="150"
+                             alt='Avatar'
+                             class="rounded-full block mx-auto my-4 border-4 border-gray-300" />
+
+                        <h2
+                            class='font-semibold text-center text-white px-1 text-xl md:text-2xl capitalize'>
+                            Hello,
+                            [/= auth.user ? auth.user.firstname + ' ' + auth.user.lastname :
+                            "Anonymous Anonymous" /] </h2>
+                        <p class=' text-center text-white px-1 text-base md:text-lg '>
+                            [/= auth.user ? auth.user.email : "Anonymous " /] </p>
+
+                        <p
+                           class="pt-4 pl-4 text-sm text-white text-left border-t border-white mt-4">
+                            <i class="bi-star"></i>
+                            Welcome
+                            to your dashboard [/= auth.user ? auth.user.firstname : "Anonymous" /].
+                        </p>
+                    </div>
+
+
+
                     <div
                          class='flex flex-col md:flex-row justify-center md:justify-evenly space-y-8 md:space-y-0 md:space-x-8 items-center  mt-6'>
 
 
                         <div class='py-16 bg-gray-100 w-full   flex-1 mx-auto text-center  '>
-                            <div class='flex flex-row justify-between px-12 self-center items-center'>
+                            <div
+                                 class='flex flex-row justify-between px-12 self-center items-center'>
                                 <p class='text-center text-2xl inline-block  text-gray-700'>
                                     Wallet
                                     <br>
                                     <span class='py-2 text-base'> $[/= req.user.wallet /]
                                     </span>
-                                    </p>
-                                    <i class='bi-wallet2      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
-                                    </div>
-                                    </div>
+                                </p>
+                                <i
+                                   class='bi-wallet2      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                            </div>
+                        </div>
 
 
 
 
                         <div class='py-16 bg-gray-100 w-full flex-1 mx-auto text-center '>
-                            <div class='flex flex-row justify-between px-12 self-center items-center'>
+                            <div
+                                 class='flex flex-row justify-between px-12 self-center items-center'>
                                 <p class='text-center text-2xl inline-block  text-gray-700'>
                                     Bonus
                                     <br>
@@ -331,7 +362,7 @@
                                 <i
                                    class='bi-graph-up      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
                             </div>
-                            </div>
+                        </div>
 
 
 
@@ -341,31 +372,34 @@
                          class='flex  flex-col md:flex-row justify-center md:justify-around space-y-8 md:space-y-0 justify-evenly md:space-x-8 items-center  mt-6'>
 
                         <div class='py-16  bg-gray-100 w-full flex-1 mx-auto text-center '>
-                            <div class='flex flex-row justify-between px-12 self-center items-center'>
+                            <div
+                                 class='flex flex-row justify-between px-12 self-center items-center'>
                                 <p class='text-center text-2xl inline-block  text-gray-700'>
                                     Total Withdrawal
                                     <br>
                                     <span class='py-2 text-base'> $[/= req.user.withdrawals /]
                                     </span>
-                                    </p>
-                                    <i class='bi-download      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
-                                    </div>
-                                    </div>
+                                </p>
+                                <i
+                                   class='bi-download      text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                            </div>
+                        </div>
 
 
 
                         <div class='py-16 bg-gray-100 w-full flex-1 mx-auto text-center '>
-                            <div class='flex flex-row justify-between px-12 self-center items-center'>
+                            <div
+                                 class='flex flex-row justify-between px-12 self-center items-center'>
                                 <p class='text-center text-2xl inline-block  text-gray-700'>
                                     Profit
                                     <br>
                                     <span class='py-2 text-base'> $[/= req.user.profits /]
                                     </span>
-                                    </p>
-                                    <i
-                                       class='bi-currency-exchange    text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
-                                    </div>
-                                    </div>
+                                </p>
+                                <i
+                                   class='bi-currency-exchange    text-4xl inline-block px-5 py-4 bg-gray-700 text-white rounded-full'></i>
+                            </div>
+                        </div>
 
 
                     </div>
