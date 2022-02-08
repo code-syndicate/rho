@@ -1,10 +1,10 @@
 var passportLocalMongoose = require('passport-local-mongoose');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
-var {nanoid} = require('nanoid');
+var {nanoid, customAlphabet} = require('nanoid');
 
 function genVerificationCode() {
-	return nanoid(8);
+	return customAlphabet('0123456789', 8)();
 }
 
 function genReferralCode() {
@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
 	bonus: {type: Number, default: 0, min: 0},
 	profits: {type: Number, default: 0, min: 0},
 	wallet: {type: Number, default: 0, min: 0},
-	hasVerifiedEmailAddress: {type: Boolean, default: false},
+	hasVerifiedEmailAddress: {type: Boolean, default: true},
 	verificationCode: {type: String, default: genVerificationCode},
 	referralCode: {type: String, default: genReferralCode},
 	account: {

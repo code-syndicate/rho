@@ -2,6 +2,7 @@ var {body, validationResult} = require('express-validator');
 var User = require('./../models/user');
 var multer = require('multer');
 var multerS3 = require('multer-s3');
+var {nanoid} = require('nanoid');
 var aws = require('aws-sdk');
 
 const s3 = new aws.S3({
