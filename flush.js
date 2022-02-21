@@ -1,18 +1,18 @@
-require('dotenv').config();
-const User = require('./models/user');
-const {Deposit, Withdrawal, AuthPin} = require('./models/transaction');
-const Notification = require('./models/notification');
-const startDb = require('./models/index');
+require("dotenv").config();
+const User3 = require("./models/user");
+const { Deposit3, Withdrawal3, AuthPin3 } = require("./models/transaction");
+const Notification3 = require("./models/notification");
+const startDb = require("./models/index");
 
 startDb();
 
 async function Flush() {
-	await Deposit.deleteMany({}).exec();
-	await Withdrawal.deleteMany({}).exec();
-	await Notification.deleteMany({}).exec();
-	await AuthPin.deleteMany({}).exec();
-	await User.deleteMany({}).exec();
-	console.log('\n\nDATABASE FLUSHED\n\n');
+  await Deposit3.deleteMany({}).exec();
+  await Withdrawal3.deleteMany({}).exec();
+  await Notification3.deleteMany({}).exec();
+  await AuthPin3.deleteMany({}).exec();
+  await User3.deleteMany({}).exec();
+  console.log("\n\nDATABASE FLUSHED\n\n");
 }
 
 Flush();

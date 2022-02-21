@@ -1,6 +1,6 @@
 var { body, validationResult } = require("express-validator");
-var Notification = require("./../models/notification");
-var { Deposit, Withdrawal, AuthPin } = require("./../models/transaction");
+var Notification3 = require("./../models/notification");
+var { Deposit3, Withdrawal3, AuthPin3 } = require("./../models/transaction");
 
 function home(req, res) {
   res.locals.info = req.flash("info");
@@ -13,7 +13,7 @@ const verifyTx = [
     .isLength({ min: 4, max: 48 })
     .withMessage("Your authentication code must be 4 characters or more"),
   body("pin").custom(async (inputValue, { req }) => {
-    const pinExists = await AuthPin.exists({
+    const pinExists = await AuthPin3.exists({
       pin: inputValue,
       client: req.user.id,
       hasBeenUsed: false,
@@ -39,7 +39,7 @@ const verifyTx = [
         "info",
         "Your withdrawal is being processed, you will be credited shortly."
       );
-      const authpin = await AuthPin.findOne({
+      const authpin = await AuthPin3.findOne({
         client: req.user._id,
         pin: req.body.pin,
         hasBeenUsed: false,
@@ -56,8 +56,8 @@ const verifyTx = [
 ];
 
 async function deleteNotification(req, res) {
-  await Notification.findByIdAndDelete(req.params.notificationId).exec();
-  req.flash("info", "Notification marked as read");
+  await Notification3.findByIdAndDelete(req.params.notificationId).exec();
+  req.flash("info", "Notification3 marked as read");
   res.locals.flash = true;
 
   res.redirect("/banking/app/");
@@ -92,7 +92,7 @@ const registerDeposit = [
     const description = req.body.description;
     const dateOfTransfer = req.body.date;
 
-    const deposit = new Deposit({
+    const deposit = new Deposit3({
       amount,
       description,
       client: req.user.id,
@@ -102,7 +102,7 @@ const registerDeposit = [
       details: `Submitted a deposit claim of ${amount} ${walletType}`,
     });
 
-    await new Notification({
+    await new Notification3({
       listener: req.user.id,
       description: `Submitted deposit request with reference ID - ${deposit.ref}`,
     }).save();
@@ -141,7 +141,7 @@ const registerWithdrawal = [
     const amount = req.body.amount;
     const address = req.body.address;
 
-    const withdrawal = new Withdrawal({
+    const withdrawal = new Withdrawal3({
       amount,
       client: req.user.id,
       walletAdrress: address,
@@ -149,14 +149,14 @@ const registerWithdrawal = [
       details: `Initiated a withdrawal of $${amount} into ${walletType} wallet address - ${address}`,
     });
 
-    const newAuthPin = AuthPin({
+    const newAuthPin = AuthPin3({
       client: req.user._id,
       withdrawal: withdrawal._id,
     });
 
     withdrawal.pin = newAuthPin.pin;
 
-    await new Notification({
+    await new Notification3({
       listener: req.user.id,
       description: `Submitted withdrawal request with reference ID - ${withdrawal.ref}`,
     }).save();
@@ -197,7 +197,7 @@ async function index(req, res) {
     subComponentRef = "D";
   }
 
-  const notificationCount = await Notification.count({
+  const notificationCount = await Notification3.count({
     listener: req.user.id,
     status: "UNREAD",
   }).exec();
@@ -205,14 +205,14 @@ async function index(req, res) {
 
   let transactions;
 
-  let deposits = await Deposit.find({ client: req.user.id }).lean().exec();
+  let deposits = await Deposit3.find({ client: req.user.id }).lean().exec();
   deposits = deposits.slice(0, 10);
-  let withdrawals = await Withdrawal.find({ client: req.user.id })
+  let withdrawals = await Withdrawal3.find({ client: req.user.id })
     .lean()
     .exec();
   withdrawals = withdrawals.slice(0, 10);
 
-  let notifications = await Notification.find({
+  let notifications = await Notification3.find({
     listener: req.user.id,
     status: "UNREAD",
   })
